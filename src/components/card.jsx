@@ -1,5 +1,7 @@
 
 import React, { useState } from "react";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const products = [
   {
@@ -113,7 +115,7 @@ const products = [
   },
 ];
 
-const ProductGrid = () => {
+const ProductGrid = ({cart, setCart }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [sortedProducts, setSortedProducts] = useState(products);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -128,6 +130,10 @@ const ProductGrid = () => {
     return matchesSearch && matchesCategory;
   }
 );
+const addToCart = (product) => {
+  setCart((prevCart) => [...prevCart, product]);
+  
+};
 
   const handleSort = (order) => {
     const sortedArray = [...products].sort((a, b) => {
@@ -235,12 +241,26 @@ const ProductGrid = () => {
               <h2 className="text-lg font-bold text-left">{product.title}</h2>
               <p className="text-gray-500 text-left">{product.description}</p>
               <h6 className="text-lg font-bold text-left">{product.price}</h6>
-              <button
+              {/* <button
             onClick={()=>className="bg-green-500 text-white px-7 py-2 rounded-lg text-left"}
             
           >
             Add To Cart 
-          </button>
+          </button> */}
+
+<button 
+  onClick={() => 
+    {
+      
+      addToCart(product);
+      toast.success(`Added to cart successfully!`);
+    }}
+  className="bg-green-500 text-white px-7 py-2 rounded-lg mt-2"
+>
+  
+  Add To Cart
+</button>
+
             </div>
           ))}
         </div>
